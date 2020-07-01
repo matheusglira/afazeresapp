@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+  <meta name="author" content="GeeksLabs">
+  <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+  <link rel="shortcut icon" href="img/favicon.png">
+
+  <title>AfazeresApp</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- bootstrap theme -->
+  <link href="css/bootstrap-theme.css" rel="stylesheet">
+  <!--external css-->
+  <!-- font icon -->
+  <link href="css/elegant-icons-style.css" rel="stylesheet" />
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <!-- full calendar css-->
+  <link href="assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+  <link href="assets/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" />
+  <!-- easy pie chart-->
+  <link href="assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css" media="screen" />
+  <!-- owl carousel -->
+  <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
+  <link href="css/jquery-jvectormap-1.2.2.css" rel="stylesheet">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="css/fullcalendar.css">
+  <link href="css/widgets.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet" />
+  <link href="css/xcharts.min.css" rel=" stylesheet">
+  <link href="css/jquery-ui-1.10.4.min.css" rel="stylesheet">
+  <!-- =======================================================
+    Theme Name: NiceAdmin
+    Theme URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    Author: BootstrapMade
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+</head>
+
+<body>
+  <!-- container section start -->
+  <section id="container" class="">
+
+
+    <header class="header dark-bg">
+
+      <!--logo start-->
+      <a href="index.html" class="logo">Lista <span class="lite">de Afazeres</span></a>
+      <!--logo end-->
+
+      <div class="top-nav notification-row">
+        <!-- notificatoin dropdown start-->
+        <ul class="nav pull-right top-menu">
+        
+          <!-- user login dropdown start-->
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="profile-ava">
+                                <img alt="" src="@{'/img/photos' + ${#authentication.getPrincipal().getUsername()} + 'jpg'   }">
+                            </span>
+                            <span class="username" th:text="${#authentication.getPrincipal().getUsername()}">Usuário</span>
+                            <b class="caret"></b>
+                        </a>
+            <ul class="dropdown-menu extended logout">
+              <div class="log-arrow-up"></div>
+              <li>
+                <a href="login.html"><i class="icon_key_alt"></i> Log Out</a>
+              </li>
+            </ul>
+          </li>
+          <!-- user login dropdown end -->
+        </ul>
+      </div>
+    </header>
+    <!--header end-->
+
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h3 class="page-header"><i class="fa fa-laptop"></i> Lista de Afazeres</h3>
+            <ol class="breadcrumb">
+              <li><i class="fa fa-home"></i><a href="#">Home</a></li>
+            </ol>
+          </div>
+        </div>
+		<div>
+<!-- 			<a th:href="@{/adicionar-tarefa}">Adicionar Tarefa</a> -->
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">Nova Tarefa</button>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">ID</th>
+						<th scope="col">Tarefa</th>
+						<th scope="col">Data de Início</th>
+						<th scope="col">Data de Fim</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Ações</th>
+					</tr>
+				</thead>
+					<tbody>
+						<tr th:each="tarefas:${tarefas}">
+						  <td th:text="${tarefas.id}"></td>
+						  <td th:text="${tarefas.nomeTarefa}"></td>
+					      <td th:text="${tarefas.dataInicio}"></td>
+					      <td th:text="${tarefas.dataFim}"></td>
+					      <td th:text="${tarefas.descricao}"></td>
+ 					      <td>
+ 					      	<div class="btn-group">
+ 					      		<a th:href="@{/tarefas/pesquisar/(id=${tarefas.id})}" class="btn btn-primary" id="editbtn" >Alterar</a>
+ 					      		<a th:href="@{/tarefas/deletar/(id=${tarefas.id})}" class="btn btn-danger" id="deletebtn" >Deletar</a>
+ 					      	</div>
+ 					      </td>
+				
+					    </tr>
+					</tbody>
+			</table>
+		</div>
+		<div>
+		
+			<h3>Piadas Aleatórias</h3>
+			<p id="piadas"></p>
+		</div>
+      </section>
+      <div class="text-right">
+        <div class="credits">
+          <!--
+            All the links in the footer should remain intact.
+            You can delete the links only if you purchased the pro version.
+            Licensing information: https://bootstrapmade.com/license/
+            Purchase the pro version form: https://bootstrapmade.com/buy/?theme=NiceAdmin
+          -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </section>
+    <!--main content end-->
+  </section>
+  <!-- container section start -->
+
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Nova Tarefa</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form th:action="@{/index/addTarefa}" method="post">
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Tarefa:</label>
+	            <input type="text" class="form-control" id="nometarefa" name="nomeTarefa">
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Data de Início:</label>
+	            <input type="date" class="form-control" id="dtinicio" name="dataInicio">
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Data de fim:</label>
+	            <input type="date" class="form-control" id="dtfim" name="dataFim">
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Descrição:</label>
+	            <textarea rows="6" cols="50" id="descricao" name="descricao"></textarea>
+	          </div>
+	          
+	          <div class="form-group">
+			  	<button type="submit" class="btn btn-primary">Salvar</button>
+	          </div>
+	          
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+	      </div>
+	    </div>
+	  </div>
+	</div>
+  
+  	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Editar Tarefa</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form th:action="@{/tarefas/alterar}" method="put">
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">ID:</label>
+	            <input type="text" class="form-control" id="editid" name="id" readonly>
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Tarefa:</label>
+	            <input type="text" class="form-control" id="editnometarefa" name="nomeTarefa">
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Data de Início:</label>
+	            <input type="date" class="form-control" id="editdtinicio" name="dataInicio">
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Data de fim:</label>
+	            <input type="date" class="form-control" id="editdtfim" name="dataFim">
+	          </div>
+	          
+	          <div class="form-group">
+	            <label for="recipient-name" class="col-form-label">Descrição:</label>
+	            <textarea rows="6" cols="50" id="editdescricao" name="descricao"></textarea>
+	          </div>
+	          
+	          <div class="form-group">
+			  	<button type="submit" class="btn btn-primary">Alterar</button>
+	          </div>
+	          
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Confirmação</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Tem certeza que deseja deletar esta tarefa?</p>
+	      </div>
+	      <div class="modal-footer">
+	        <a class="btn btn-primary" id="confirmarDelete" href="">Deletar</a>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+		<div class="modal" tabindex="-1" role="dialog" id="principalModal">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Olá</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <p>Seja bem-vindo!</p>
+	        <p>Fique abaixo com fotos aleatórias de bodes, só para distrair! :)</p>
+	        <img alt="" src="https://placegoat.com/500/200">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+  <!-- javascripts -->
+  <script src="js/jquery.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <!-- nice scroll -->
+  <script src="js/jquery.scrollTo.min.js"></script>
+  <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <!--custome script for all page-->
+    <script src="js/scripts.js"></script>
+	<script src="js/tarefas.js"></script>
+</body>
+
+</html>
