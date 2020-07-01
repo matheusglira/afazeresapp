@@ -55,11 +55,6 @@ public class AppController {
 		return "redirect:/index";
 	}
 	
-	@GetMapping("/usuarios")
-	public String usuarios() {
-		return "Usuario";
-	}
-	
 	//LOGIN E LOGOUT
 	
 	@GetMapping("/login")

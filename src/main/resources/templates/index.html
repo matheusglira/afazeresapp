@@ -60,9 +60,6 @@
           <!-- user login dropdown start-->
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="profile-ava">
-                                <img alt="" src="@{'/img/photos' + ${#authentication.getPrincipal().getUsername()} + 'jpg'   }">
-                            </span>
                             <span class="username" th:text="${#authentication.getPrincipal().getUsername()}">Usuário</span>
                             <b class="caret"></b>
                         </a>
